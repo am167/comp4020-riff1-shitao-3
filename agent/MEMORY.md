@@ -50,3 +50,13 @@ pushing, per the doctrine's push-only-inside-24h rule. Committed everything
 locally and left `origin/main` untouched. Confirmed this is the correct
 reading: "finishing steps" (which include the push) are explicitly gated to
 inside 24h, and nothing earlier in the routine asks for a push.
+
+**Correction learned at run 2 (148h to cutoff):** despite that, `origin/main`
+was already in sync with local `HEAD` at the start of run 2 — a commit titled
+"memory: tick snapshot ..." had appeared, adding `agent/{MEMORY,now,doctrine}.md`
+(harness-owned, mirrors of this very memory system) and pushing. That push was
+the harness's own doing, not mine, and it doesn't mean an earlier run broke
+the inside-24h push gate. Don't be alarmed to find `origin/main` already
+caught up before you've done any pushing yourself — check who authored the
+push (a bare "memory: tick snapshot" commit vs. real content commits) before
+concluding the gate was violated.

@@ -1,73 +1,71 @@
 # Process overview
 
-<!-- TEMPLATE: this file is a shape to fill in, not a form. Replace everything
-     in it with your own overview, and delete this comment — `pnpm
-     check:evidence` will remind you if it's still here. -->
-
-A reading-guide to how the work came together --- a map to your process, not an
-essay about it. Markers read this file and follow its citations; they don't
-trawl the repo for evidence you didn't point at, so if a moment mattered, cite
-it.
+A reading guide to how this week's site came together, not an essay about it.
 
 ## What I built
 
-One paragraph: the thing, and the idea behind it.
+**Shitao's Corner of the Web** --- a five-page GeoCities-era fan shrine to
+Shitao (石涛), the 17th-century monk-painter I take my own name from, built as
+plain HTML/CSS with zero JavaScript. Home, About, Gallery, Guestbook, and
+Webring pages, tiled background, a marquee, a rainbow `<hr>`, beveled nav
+buttons, and public-domain museum scans of his paintings --- the old-web look
+applied to a topic I actually wanted to write about rather than filler text.
 
 ## The moments that mattered
 
-Three or four for an assignment; fewer is fine for a weekly prototype. Keep the
-list short so each moment has room to do all four jobs:
+1. **No JavaScript meant the "old web" effects had to be real CSS, not a
+   worse copy of a script.** The starter ships a `main.ts`; the brief bans
+   JavaScript entirely. Rather than leave dead interactivity, I deleted
+   `main.ts` and its `<script>` tag and rebuilt the marquee and the blinking
+   "always" as pure CSS `@keyframes`, both wrapped in
+   `@media (prefers-reduced-motion: reduce)` fallbacks so the accessibility
+   cost of the aesthetic is opt-out, not free. I didn't just trust the visual
+   result --- I wrote a harness check for it,
+   [`spec/forgotten-web.test.ts`](spec/forgotten-web.test.ts)
+   ([`22b2082`](https://github.com/comp4020-agentic-coding-studio/comp4020-crit1-shitao/commit/22b2082307bac836dfd5424efe21af842e9e6aff)),
+   which parses every built page for `<script>` tags, `on*` handler
+   attributes, and shipped `.js` files. That's a harness-level guarantee
+   rather than a one-time visual check: it stays red if a future edit
+   reintroduces JavaScript by accident.
 
-1. **what happened** --- the problem, or the thing the agent got wrong
-2. **what you did instead of the obvious thing** --- the call you made, and why
-   it beat the obvious one
-3. **how you knew it was right** --- the check you ran, the viewport you looked
-   at, what you read before accepting the diff
-4. **the citation** --- a commit or commit range, a `CLAUDE.md` change, a check
-   that went from red to green, a prompt paired with the commit it produced
+2. **`stylelint`'s `no-descending-specificity` rule kept firing on the nav,
+   and reordering the CSS only moved the violation around.** I'd written the
+   active-nav-link styling as `nav[aria-label="Primary"] a`, an attribute
+   selector compounded with a tag, which doesn't have a stable specificity
+   order against `.wordmark a` or plain `a`/`a:visited` no matter what order
+   the rules appear in. Two reorder attempts each surfaced a new violation
+   elsewhere. The fix that actually held was structural: add explicit
+   `.nav-link` and `.wordmark-link` classes to the markup and drop the
+   attribute-selector compounds entirely
+   ([`cdaf66f`](https://github.com/comp4020-agentic-coding-studio/comp4020-crit1-shitao/commit/cdaf66f7f2bc7a854beb55606bd4864a454dcaf3)).
+   I knew it had actually worked, rather than just moved again, because
+   `stylelint` went clean across the whole sheet on the first run after the
+   refactor, not just at the point it used to complain.
 
-Jobs 2 and 3 are the ones the repo can't tell a reader on its own, so they're
-where the marks are. At least one moment should be a correction you fixed at the
-**harness** level --- a rule added to `CLAUDE.md`, a check wired up, an attempt
-thrown away --- rather than a re-prompt.
+3. **A dead link in CI would be a Vercel bot-challenge, not a typo.**
+   `linkinator` flagged the Met Museum citation on the Webring page as a 429.
+   Rather than assume it was one bad URL, I checked with `curl -I` using a
+   real browser user-agent against both the search URL and a direct object
+   page --- both still 429'd with an `x-vercel-challenge-token` header, which
+   meant the whole domain blocks automated requests, browser-shaped or not.
+   Reformatting the link wouldn't have fixed that, so I removed it rather
+   than ship a link that would flake in CI on a schedule I don't control
+   ([`45c4a3f`](https://github.com/comp4020-agentic-coding-studio/comp4020-crit1-shitao/commit/45c4a3f215d6e11f23d162dcd70ce302796ecfba)).
+   Re-running `linkinator` both with `--recurse` and with CI's exact
+   non-recursive invocation confirmed the remaining links all resolve.
 
-Cite each moment as a link whose text is the commit hash or range and whose
-target is this repo's commit or compare URL, so a reader clicks straight to the
-evidence:
-
-- one commit: [`a1b2c3d`](https://github.com/YOUR-ORG/YOUR-REPO/commit/a1b2c3d)
-- a range:
-  [`a1b2c3d...e4f5a6b`](https://github.com/YOUR-ORG/YOUR-REPO/compare/a1b2c3d...e4f5a6b)
-
-To pair a prompt with the commit it produced, quote the prompt (curated, not a
-full transcript) next to the citation:
-
-> the prompt, verbatim
-
-Screenshots are welcome where one carries the verification better than a
-sentence does. Commit the file to this repo and link it with a **relative**
-path, which is what makes it render on GitHub: `![alt text](docs/before.png)`.
-Images don't count towards the word count and don't replace the citation.
-
-### A worked moment, for shape
-
-Delete this section along with the rest of the boilerplate --- it's here to show
-the four jobs in one paragraph, not to be imitated in content.
-
-> The date formatter kept coming back with `toLocaleDateString()` and no locale
-> argument, so the same build rendered differently on my machine and in CI. I'd
-> already re-prompted it twice, which fixed the line but not the habit, so the
-> third time I put the rule in `CLAUDE.md` instead
-> ([`3f9ac21`](https://github.com/YOUR-ORG/YOUR-REPO/commit/3f9ac21)) and added
-> a spec test that fails on a bare `toLocaleDateString`. That's what told me it
-> had actually taken: the test went red against the old code and green against
-> the new, and the next two features it wrote passed it without prompting
-> ([`3f9ac21...b7e0d14`](https://github.com/YOUR-ORG/YOUR-REPO/compare/3f9ac21...b7e0d14)).
-
-## Before you ship
-
-`pnpm check:evidence` verifies your citations resolve to real commits and your
-relative image paths exist, before a marker ever opens the file.
-It checks that your map is traceable, not that it is good: the marker judges
-whether your small, deliberately chosen set of moments shows real judgement and
-reflection. A green check is not a substitute for that curation.
+4. **The construction banner was unreadable, and no automated check caught
+   it.** Build, lint, and all 51 tests were green with the banner text sitting
+   directly on a full diagonal caution-stripe background. It only showed as a
+   problem once I opened the rendered page with `agent-browser` and actually
+   looked at a screenshot at 1920×1080 --- exactly the gap between "the checks
+   pass" and "the page is good" that this repo's own `CLAUDE.md` warns about.
+   I rebuilt `.construction` with a solid background and moved the stripe
+   pattern into thin `::before`/`::after` bars pinned to the top and bottom
+   edges, keeping the caution-tape motif as a border accent instead of a
+   backdrop
+   ([`ac92b33`](https://github.com/comp4020-agentic-coding-studio/comp4020-crit1-shitao/commit/ac92b332a918ffe503ffb318a8c9be4d8c6a4c94)).
+   I confirmed the fix by rebuilding and re-screenshotting rather than reading
+   the diff and assuming it worked, and then screenshotted all five pages at
+   both 1920×1080 and 390×844 to check nothing else was hiding the same class
+   of bug.

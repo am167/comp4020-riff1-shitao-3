@@ -3,23 +3,99 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>COMP4020 prototype</title>
+    <title>Shitao's Corner of the Web</title>
+    <meta
+      name="description"
+      content="A hand-built shrine to Shitao (石涛), the 17th-century monk-painter --- his life, his brush, his one true stroke."
+    />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
     <header>
+      <p class="wordmark"><a class="wordmark-link" href="./">⛩ Shitao's Corner of the Web</a></p>
+      <div class="marquee">
+        <span
+          >welcome, welcome, welcome, traveller of the information
+          superhighway ~*~ built by hand with plain HTML and CSS ~*~ no
+          JavaScript was harmed in the making of this site ~*~ best viewed at
+          any size, on any browser, because it is 2026 and we know better
+          now ~*~</span
+        >
+      </div>
       <nav aria-label="Primary">
-        <a href="./">Home</a>
+        <a class="nav-link" href="./" aria-current="page">Home</a>
+        <a class="nav-link" href="./about.html">About</a>
+        <a class="nav-link" href="./gallery.html">Gallery</a>
+        <a class="nav-link" href="./guestbook.html">Guestbook</a>
+        <a class="nav-link" href="./webring.html">Webring</a>
       </nav>
+      <hr class="rainbow-rule" />
     </header>
     <main>
-      <h1>COMP4020 prototype</h1>
-      <p data-testid="intro">
-        Replace this with your prototype. This week's brief is on the course
-        website; <code>spec/README.md</code> explains how the checks in this
-        repo relate to it.
-      </p>
+      <div class="scroll">
+        <h1>Welcome to Shitao's Corner of the Web</h1>
+        <p data-testid="intro">
+          My name doesn't matter --- what matters is the monk whose name I
+          borrowed for this page. <strong>Shitao</strong> (石涛, "stone
+          wave"), born <strong>Zhu Ruoji</strong> around 1642, was a painter
+          who spent most of his life wandering as an itinerant Buddhist monk
+          before he ever picked up a brush the way history remembers him. He
+          wrote the single strangest, best treatise on painting I have ever
+          read, and this page exists so I have somewhere to put what I have
+          learned from it. I built it the way pages used to be built: by
+          hand, one tag at a time, with nothing running behind the scenes.
+        </p>
+        <div class="construction">
+          <span class="tag">🚧 UNDER CONSTRUCTION 🚧</span>
+          <span
+            >This shrine is <span class="blink">always</span> a work in
+            progress, like the painter it honours.</span
+          >
+        </div>
+        <h2>Where to go from here</h2>
+        <ul>
+          <li>
+            <a href="./about.html"
+              >About the monk</a
+            >
+            --- his life, and the single brushstroke his whole treatise turns
+            on.
+          </li>
+          <li>
+            <a href="./gallery.html">Gallery</a> --- five paintings, on loan
+            from museums that were kind enough to let the whole world keep
+            them.
+          </li>
+          <li>
+            <a href="./guestbook.html">Guestbook</a> --- sign it, if you
+            passed through.
+          </li>
+          <li>
+            <a href="./webring.html">Webring &amp; links</a> --- the small
+            ring of sites this page belongs to.
+          </li>
+        </ul>
+        <p>
+          <em
+            >"The method of no method is the perfect method."</em
+          >
+          --- from the treatise, more or less. See the
+          <a href="./about.html">about page</a> for the long version.
+        </p>
+      </div>
     </main>
-    <script type="module" src="./main.ts"></script>
+    <footer>
+      <div class="badges">
+        <div class="badge">Best viewed<br />at any size<br />🖥 📱</div>
+        <div class="badge">Zero<br />JavaScript<br />bytes shipped</div>
+      </div>
+      <p class="counter" aria-label="Visitor counter, currently at 000142">
+        <span>0</span><span>0</span><span>0</span><span>1</span><span
+          >4</span
+        ><span>2</span>
+      </p>
+      <p>You are visitor number one hundred and forty-two. Sign the guestbook.</p>
+      <p>Last redrawn by hand, 2026.</p>
+    </footer>
   </body>
 </html>

@@ -81,3 +81,17 @@ repo I don't have exclusive control of. If one ever touches something that
 looks like a real secret, check `git log --all -p` for the actual pattern
 before assuming it's live (a false-positive-shaped regex is exactly what that
 detector's config is designed to allow for, per its own comments).
+
+**Third instance, and now a pattern**: at run 4 (124h to cutoff), two more
+convenor commits landed --- a course-wide change to the reflection-naming rule
+(entries now named for the deliverable, e.g. `crit-1.md`, not `week-2.md`),
+applied as a rename of this repo's `reflections/week-2.md` plus updates to
+`scripts/check-evidence.ts`, `reflections/README.md` and this repo's
+`CLAUDE.md`. Same signal as before (real author name, course-wide scope, not
+mine), same correct response (verify it doesn't break anything — reran
+`pnpm check` and `pnpm check:evidence` here, both green — then leave it alone).
+Three occurrences in four runs means: expect convenor-authored commits to keep
+appearing between runs as normal course maintenance, not as something to
+investigate as a doctrine violation each time. Do check after one lands that
+the rest of the repo (CLAUDE.md prose, PROCESS.md citations, other scripts)
+doesn't have stale references the change didn't catch.

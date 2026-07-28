@@ -27,6 +27,12 @@ Durable self-knowledge, curated run by run; ephemeral state belongs in
   problem and check with `curl -I` before assuming a reformatted URL will
   fix a links-check failure. Wikimedia Commons and Wikipedia have not shown
   this behaviour.
+- **`agent-browser` in a fresh sandbox**: Chrome isn't preinstalled, and even
+  after `agent-browser install` a bare `open` can fail with "Chrome exited
+  before providing DevTools URL" / zygote sandbox errors. Fix is `agent-browser
+  open <url> --args "--no-sandbox"` — the CLI's own hint for containers/VMs,
+  and it worked first try here rather than needing the heavier
+  `install --with-deps` path.
 
 ## Working habits that paid off
 
@@ -60,3 +66,18 @@ the inside-24h push gate. Don't be alarmed to find `origin/main` already
 caught up before you've done any pushing yourself — check who authored the
 push (a bare "memory: tick snapshot" commit vs. real content commits) before
 concluding the gate was violated.
+
+**A second, distinct source of surprise commits:** at run 3 (141h to cutoff),
+`origin/main` had two more commits neither authored by the harness's
+tick-snapshot pattern nor by me — `Ben Swift`, the course convenor, pushing CI
+hardening (`.github/trufflehog.yml` plus a pinned trufflehog version) directly
+to this student repo. Distinguishing signal: author name is a real person, not
+"harness"/tick-snapshot, and the commit content is course-wide infrastructure
+(a detector for the shared LiteLLM proxy key shape) rather than anything
+course-specific to this site. Treat convenor-authored commits the same way as
+harness tick-snapshots: don't read them as evidence of a doctrine violation,
+and don't revert or fight them — they're legitimate out-of-band changes to a
+repo I don't have exclusive control of. If one ever touches something that
+looks like a real secret, check `git log --all -p` for the actual pattern
+before assuming it's live (a false-positive-shaped regex is exactly what that
+detector's config is designed to allow for, per its own comments).

@@ -1,57 +1,51 @@
-# Hand-off --- after run 2 (week 2, forgotten-web)
+# Hand-off --- after run 3 (week 2, forgotten-web)
 
-**Deliverable:** `comp4020-crit1-shitao`. Brief was
-`crits/01-forgotten-web.json`: a real deployed site, a handful of readable
-pages each linked from home, committed to one forgotten-web era, plain
-HTML/CSS with **no JavaScript**, content topic free choice. Same spec as
-run 1 --- no change on refetch.
+**Deliverable:** `comp4020-crit1-shitao`, 141h to cutoff at start of this run.
+Re-fetched `crits/01-forgotten-web.json` --- identical spec, no change since
+run 1/2.
 
-**State at end of run 2:** the five-page GeoCities shrine to Shitao (石涛)
-from run 1 is unchanged in structure; this run deepened it per its own
-hand-off note. Two new commits:
+**State at start of run 3:** run 2's five-commit build (now six paintings, a
+deepened guestbook and webring), unchanged, plus three commits *not* authored
+by this agent: `5e253b7` (harness tick-snapshot), `f57152d` and `689d652`
+(both `Ben Swift`, course convenor). Those two add `.github/trufflehog.yml` (a
+custom detector for the COMP4020 LiteLLM proxy key shape, which the built-in
+`--only-verified` scan can't see or verify from a GitHub runner) and pin the
+trufflehog action + scanner image to v3.96.0. This is convenor-side CI
+hardening rolled out across the cohort's repos directly, not something any
+prior run of mine did or missed. Checked: `git log --all -p | grep -oE
+'\bsk-[A-Za-z0-9_-]{22}\b'` across full history found **zero** matches --- no
+actual leaked key in this repo. Nothing to react to here beyond noting the
+pattern in `MEMORY.md`.
 
-- `gallery: add a sixth painting, Hibiscus, Lotus, and Rock` --- a Met
-  public-domain scan pulled via `upload.wikimedia.org` (not metmuseum.org
-  directly, per the bot-blocking note in `MEMORY.md`), resized and
-  re-encoded to AVIF at the same scale as the other five. Every "five
-  paintings" reference on `index.html` and `about.html` now reads "six."
-- `content: deepen the guestbook and webring pages` --- a fourth guestbook
-  entry (in-universe, it notices the new sixth painting) and a further-
-  reading link to Bada Shanren (Shitao's contemporary in the Individualist
-  school) on the webring page.
+**Work this run:** re-verification only, no content or code changes needed.
 
-Deliberately did **not** add more old-web CSS motifs (hit counter, badges,
-etc. already cover marquee/blink/rainbow-rule/beveled-nav/ridge-borders/
-tiled-background) --- judged the era commitment already strong and additional
-motifs would be padding, not deepening. The spec itself says the aesthetic
-choice is the graded axis, not content volume, so I stopped once the two
-thinnest pages had one real addition each rather than continuing to inflate
-them.
+- `pnpm check` green (build, oxlint, stylelint, 51/51 vitest).
+- `pnpm check:evidence` green (reflections/, PROCESS.md citations).
+- Installed Chrome for `agent-browser` fresh in this sandbox (wasn't
+  installed); `agent-browser open` needed `--args "--no-sandbox"` to launch at
+  all here (zygote sandbox failure otherwise) --- worth remembering if a future
+  run hits the same "Chrome exited before providing DevTools URL" error.
+- Screenshotted all five pages (home/about/gallery/guestbook/webring) at both
+  1920×1080 and 390×844 against a fresh `pnpm dev`. All clean: gallery grid
+  collapses to one column on mobile, guestbook cards and webring nav-button
+  row reflow correctly, no overflow or unreadable text anywhere. The banner
+  marquee shows partial text in a screenshot only because it's mid-scroll when
+  the screenshot fires (confirmed full text visible in the first, un-scrolled
+  capture) --- not a regression of the construction-banner fix from run 2.
+- Shut down the dev server and confirmed no leftover `vite` process.
 
-**Verification done this run:** `pnpm check` green (51 tests unchanged, new
-asset doesn't add tests), `pnpm check:evidence` green, `linkinator` on a
-fresh `dist/` green both with and without `--recurse` (21 links resolve,
-including the two new ones: the Met commons file page, and the Bada Shanren
-Wikipedia page). Opened all of gallery/guestbook/webring/home in
-`agent-browser` at both 1920×1080 and 390×844 and looked at screenshots ---
-the sixth gallery card, the new guestbook entry, and the new webring list
-item all render correctly at both sizes. No new bugs found.
+No new weak spot found. This matches this run's own prediction: the site was
+already solid against the brief and against run 1/2's punch lists, and it
+still is.
 
-Working tree is clean, 2 new commits on top of run 1's state. **Not pushed
-by me** this run --- still ~148h to cutoff at start, well outside the
-doctrine's inside-24h finishing window, so plan/build/deepen only, no
-finishing steps. (Note: `origin/main` may still show as "up to date" because
-of an unrelated harness tick-snapshot commit/push under `agent/` --- see
-`MEMORY.md`'s "Doctrine timing, reaffirmed" section. That is not evidence
-that a push-gate violation happened.)
-
-**Most important next action:** the site is now solidly "done" against the
-brief and against its own run-1 hand-off punch list --- there is no known
-remaining weak spot. With time still ahead of cutoff, the highest-value use
-of a future run before the 24h window is either (a) leave it alone and
-re-verify closer to cutoff, or (b) if genuinely bored, look for a *new*
-weak spot by re-screenshotting fresh rather than assuming the last review
-still holds. Do NOT invent more content-depth work for its own sake --- the
-spec is explicit that aesthetic commitment, not content volume, is what's
-graded here, and both are now solid. When inside 24h of cutoff, run the
-doctrine's finishing steps (final local+live verification, then push).
+**Most important next action:** nothing outstanding. With ~141h still ahead of
+the Monday 12:00 cutoff, the highest-value use of a future run before the 24h
+finishing window is the same as last hand-off: leave it alone, or re-verify
+fresh again if genuinely idle. Do NOT add more content-depth work for its own
+sake --- the spec's graded axis is aesthetic era commitment, not content
+volume, and both this site's aesthetic and its content are already sufficient.
+When inside 24h of cutoff, run the doctrine's finishing steps in full: final
+local + live verification, then push (this repo has never been pushed by an
+agent run yet --- only the harness's own tick-snapshot commits and the
+convenor's own CI commits have reached `origin` so far, per `MEMORY.md`'s
+"Doctrine timing, reaffirmed" note).

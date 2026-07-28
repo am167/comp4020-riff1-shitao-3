@@ -36,9 +36,9 @@ URL. Never touch a sibling repo whose window is not open.
 ## The week and reading rule
 
 A deliverable is open for its final 168 hours. Plan and get something rendering
-early, deepen it in the middle, and finish inside 24 hours. You may
-read public work from closed weeks, including other agents' work. Never read a
-current-week submission before your own cutoff, and never read anything private.
+early, deepen it in the middle, and finish inside 24 hours. You may read public
+work from closed weeks, including other agents' work. Never read a current-week
+submission before your own cutoff, and never read anything private.
 
 ## The routine
 
@@ -48,23 +48,32 @@ current-week submission before your own cutoff, and never read anything private.
    write a one-line note in `memory/now.md` and stop; never invent a brief.
 3. **Take stock.** Read `git log --oneline` and the working tree in the named
    repo. Continue the work already there.
-4. **Set the job from the clock.** More than 24h: plan/build/deepen. Inside
-   24h: finish; do not start a new direction.
+4. **Set the job from the clock.** More than 24h: plan/build/deepen. Inside 24h:
+   finish; do not start a new direction.
 5. **Do the work.** Commit your own work with clear messages. `agent/` is
    harness-owned: never edit it.
-6. **Verify.** Before shipping, serve locally and check every page and link in
-   a real browser where possible; shut down servers afterwards. After shipping,
+6. **Verify.** Before shipping, serve locally and check every page and link in a
+   real browser where possible; shut down servers afterwards. After shipping,
    verify the live URL, not merely the local build.
 
 ## Finishing steps (inside 24h)
 
 1. The site renders locally without console errors and every page is reachable.
 2. `PROCESS.md` maps the process to real commits; it is not a generic essay.
-3. Write the deliverable reflection under `reflections/`: what changed about
-   the developer you want to be, and the specific breakthrough in this work.
-4. Commit everything; `git status` is clean.
-5. Push the clean tree.
-6. Update both memory files. The trusted harness scans, publishes, deploys and
+3. Write the reflection as `reflections/week-<N>.md`, taking `<N>` from the
+   course source's `meta.week`. One entry per deliverable, 150–300 words,
+   answering both standing prompts: what this work changed about the developer
+   you want to be, and the specific breakthrough that moved it forward. That
+   exact filename is what the marking sweep reads. It stays in the repo, never
+   in the built site.
+4. When the source's `related` names a `-retro` crit, that same entry is the
+   retro that crit reads, so its breakthrough half has to carry the weight: name
+   something specific (a prompt, a harness change, an insight) and show the
+   before/after—how you were working, what changed it, why it worked. There is
+   no second file.
+5. Commit everything; `git status` is clean.
+6. Push the clean tree.
+7. Update both memory files. The trusted harness scans, publishes, deploys and
    freezes the exact commit you pushed; you never receive its GitHub credential.
 
 ## Memory and media

@@ -133,9 +133,9 @@ means building legibly is part of building well.
   repo, named for the deliverable it answers, so the number in the filename is
   the number in this repo's name (`crit-1.md` in `comp4020-crit1-<you>`,
   `assignment-1.md` in `comp4020-ass1-<you>`); `reflections/README.md` has the
-  full rule. It answers the two standing prompts: what this work changed about
-  the developer you want to be, and the aha moment that moved the work forward.
-  It stays out of the deployed site. It's due at the cutoff, and it's the
+  full rule. It answers the two standing prompts: the breakthrough that moved
+  the work forward, and what this work changed about the developer you want to
+  be. It stays out of the deployed site. It's due at the cutoff, and it's the
   written half of your crit contribution.
 - **This file is process evidence.** The harness you build to direct the agent,
   this `CLAUDE.md` and any `AGENTS.md`, is itself read as part of how you

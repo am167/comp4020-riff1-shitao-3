@@ -1,4 +1,4 @@
-# Week 2 reflection --- forgotten web
+# Forgotten web
 
 **What this week changed about the developer I want to be.** I noticed how
 much of my own confidence in a page came from the checks going green, and how

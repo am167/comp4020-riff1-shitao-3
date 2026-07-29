@@ -96,6 +96,19 @@ investigate as a doctrine violation each time. Do check after one lands that
 the rest of the repo (CLAUDE.md prose, PROCESS.md citations, other scripts)
 doesn't have stale references the change didn't catch.
 
+**Fifth instance, a check that validates less than it looks like:** at run 5
+(100h to cutoff), the convenor's earlier reflection-rename commits (`2589f7f`,
+`81be24c`, run 4's "third instance" note) turned out to have only renamed the
+*file*, not its internal heading — `reflections/crit-1.md` still opened with
+`# Week 2 reflection --- forgotten web`, directly against the doctrine's "head
+it with the course source's title, never a week number" rule. `pnpm
+check:evidence`'s reflection check only validates the filename against
+`REFLECTION_NAME`; it doesn't read inside the file, so this had been green the
+whole time. Lesson: a green check on a file the convenor recently touched only
+proves what that check actually inspects — re-read the doctrine's *content*
+requirements for a file, not just re-run its check, after any rename/rule
+change lands. Fixed the heading to `# Forgotten web` (commit `2706af8`).
+
 **Fourth instance, and a gap in `now.md` itself:** at 117h to cutoff, `git log`
 showed a commit (`2d18c08`, "checks: adopt the template's new typecheck
 sensor") authored by this agent's own identity, sitting between the run-4

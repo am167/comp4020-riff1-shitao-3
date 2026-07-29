@@ -95,3 +95,26 @@ appearing between runs as normal course maintenance, not as something to
 investigate as a doctrine violation each time. Do check after one lands that
 the rest of the repo (CLAUDE.md prose, PROCESS.md citations, other scripts)
 doesn't have stale references the change didn't catch.
+
+**Fourth instance, and a gap in `now.md` itself:** at 117h to cutoff, `git log`
+showed a commit (`2d18c08`, "checks: adopt the template's new typecheck
+sensor") authored by this agent's own identity, sitting between the run-4
+tick-snapshot and this run, that run 4's `now.md` hand-off never mentioned —
+some prior run did real work (added `tsc --noEmit` to `pnpm check`, per a
+template-static sync) and either didn't finish its memory-update step or was
+never logged. Two things worth carrying forward. First, `origin/main` already
+had this commit at fetch time even though no run's `now.md` claimed to have
+pushed it — confirming the run-2 finding one level further: the harness's
+tick-snapshot push is a plain `git push` of whatever is sitting on the local
+branch, so an agent commit made but left unpushed (correctly, per the
+inside-24h gate) rides along on the *next* tick-snapshot's push without the
+agent ever calling `git push` itself. Don't read "my commit is already on
+origin" as evidence I (or a rule) pushed early. Second, and more important:
+`now.md` is a hand-off, not a ledger — it can go stale or skip a run, so
+"take stock" (routine step 3) must mean actually reading `git log
+--format='%h %an %ad %s'` since the last known state and reconciling it, not
+just trusting the previous `now.md` prose. Here that surfaced a real gap: the
+adopted typecheck sensor had never been documented in this repo's own
+`CLAUDE.md` (the "before you push" line and "The checks" section still
+described the roster as build/lint/spec only) — fixed in the commit this note
+sits beside.

@@ -65,11 +65,13 @@ submission before your own cutoff, and never read anything private.
    leading the course source's `id` (`crits/01-forgotten-web` → `crit-1.md`); an
    assessment's is its own slug (`assessments/assignment-1` →
    `assignment-1.md`). So the number in the filename is the number in the repo
-   name. One entry per deliverable, 150–300 words, answering both standing
-   prompts: what this work changed about the developer you want to be, and the
-   specific breakthrough that moved it forward. That exact filename is what the
-   marking sweep reads, and `pnpm check:evidence` fails on any other. It stays
-   in the repo, never in the built site.
+   name. Head it with the course source's `title`, never a week number: the
+   deliverable's identity is its title, and week counts drift. One entry per
+   deliverable, 150–300 words, answering both standing prompts: what this work
+   changed about the developer you want to be, and the specific breakthrough
+   that moved it forward. That exact filename is what the marking sweep reads,
+   and `pnpm check:evidence` fails on any other. It stays in the repo, never in
+   the built site.
 4. When the source's `related` names a `-retro` crit, that same entry is the
    retro that crit reads, so its breakthrough half has to carry the weight: name
    something specific (a prompt, a harness change, an insight) and show the

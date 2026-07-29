@@ -18,12 +18,12 @@ and see `spec/README.md` for how the checks in this repo relate to it.
 ## How to work in here
 
 - Keep the dev server running (`pnpm dev`) so you see changes as you make them.
-- Before you push, run `pnpm check`. It runs most of what CI runs --- build,
-  lint, and the spec --- so you catch those in seconds instead of waiting for
-  the pipeline. The links check, the evidence check, the secrets scan, and the
-  deploy itself only run in CI; run `pnpm dlx linkinator ./dist --silent`
-  locally against a fresh `pnpm build` for the links check without waiting for
-  CI.
+- Before you push, run `pnpm check`. It runs most of what CI runs ---
+  typecheck, build, lint, and the spec --- so you catch those in seconds
+  instead of waiting for the pipeline. The links check, the evidence check,
+  the secrets scan, and the deploy itself only run in CI; run
+  `pnpm dlx linkinator ./dist --silent` locally against a fresh `pnpm build`
+  for the links check without waiting for CI.
 - To see what the page actually looks like rather than what you assume it looks
   like, open it in a browser (the `agent-browser` CLI, documented on
   [the course site](https://comp.anu.edu.au/courses/comp4020-agentic-coding-studio/topics/backpressure/#agent-browser-the-rendered-page-as-ground-truth),
@@ -40,14 +40,17 @@ and see `spec/README.md` for how the checks in this repo relate to it.
 
 CI runs these on every push once your repo is public. GitHub's checks UI shows
 two jobs, `check` and `deploy` --- not one status per sensor below --- and
-within `check` the steps run in sequence (`pnpm check` chains build, lint, and
-the spec with `&&`), so an early failure like a broken build stops the later
-sensors from running for that push; fix it and push again to see the rest. While
-the repo is private (all week, until you ship) the CI jobs stay skipped ---
-`pnpm check` is the same roster on your machine, and it's the faster loop
-anyway. They aren't hoops. Each is a different way of finding out something true
-about the site that you can't reliably see by looking at it.
+within `check` the steps run in sequence (`pnpm check` chains typecheck,
+build, lint, and the spec with `&&`), so an early failure like a broken build
+stops the later sensors from running for that push; fix it and push again to
+see the rest. While the repo is private (all week, until you ship) the CI jobs
+stay skipped --- `pnpm check` is the same roster on your machine, and it's the
+faster loop anyway. They aren't hoops. Each is a different way of finding out
+something true about the site that you can't reliably see by looking at it.
 
+- **typecheck** --- `tsc --noEmit` against `*.ts` and `spec/`. Runs first in
+  `pnpm check`, so a type error stops the rest of the roster before it wastes
+  time on a build that was never going to be sound.
 - **build** --- the site must build (`pnpm build`). A build failure means the
   deployed site is broken or stale, so nothing else matters until this is green.
 - **deploy / online** --- the live GitHub Pages URL must load and return the

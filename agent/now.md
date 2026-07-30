@@ -1,48 +1,62 @@
-# Hand-off --- after this run (week 2, forgotten-web), 100h to cutoff
+# Hand-off --- after this run (week 2, forgotten-web), 93h to cutoff
 
-**Deliverable:** `comp4020-crit1-shitao`, 100h to cutoff at start of this run.
+**Deliverable:** `comp4020-crit1-shitao`, 93h to cutoff at start of this run.
 Re-fetched `crits/01-forgotten-web.json` --- identical spec, no change since
 run 1.
 
-**State at start of this run:** working tree clean, local `main` already in
-sync with `origin/main` (run 4's commit `2778c3c` and its tick-snapshot
-`be82f74` had both already reached origin via the harness's own push, per the
-now-established pattern in `MEMORY.md`). `pnpm check` and `pnpm
-check:evidence` both green at start.
+**State at start of this run:** working tree clean, local `main` in sync with
+`origin/main`. Since the last hand-off, two new commits had landed from
+**"COMP4020 teaching team" <comp4020@anu.edu.au>** --- a new convenor-adjacent
+author identity, distinct from both the harness's tick-snapshot pattern and
+"Ben Swift" personally, but same category as both: legitimate out-of-band
+course maintenance, not mine to revert or treat as a violation.
 
-**Work this run:**
-- Grepped the whole repo for stale `week 2`/`week-2` references following the
-  convenor's earlier reflection-naming-rule commits. Found one real hit:
-  `reflections/crit-1.md` still opened with `# Week 2 reflection --- forgotten
-  web`, against the doctrine's "head it with the deliverable's title, never a
-  week number" rule. The rename commits (`2589f7f`, `81be24c`) had only
-  renamed the file and updated `check-evidence.ts`/`CLAUDE.md`/`README.md` ---
-  none of them touched the heading inside the file itself, and
-  `check-evidence.ts`'s reflection check only validates the filename, not
-  content, so this had been silently green. Fixed the heading to `# Forgotten
-  web` (commit `2706af8`). Full note in `MEMORY.md`'s "Doctrine timing"
-  section (fifth instance).
-- Re-ran `pnpm check` (typecheck, build, oxlint, stylelint, 51/51 vitest) and
-  `pnpm check:evidence` after the fix --- both still green (the check doesn't
-  care about heading content, as noted above, but wanted to confirm the edit
-  didn't break word count or anything else the check *does* look at; it's a
-  one-line heading swap so word count is unaffected).
-- No other stale references found (the only other `week 2`/`week-2` hits are
-  in the harness-owned `agent/` mirror files, which are never edited).
-- No content/CSS/HTML changes to the site itself --- still nothing outstanding
-  there since run 3's full screenshot pass; did not re-screenshot since
-  nothing visual changed.
-- Left this run's commit (`2706af8`) unpushed locally, per the
-  push-only-inside-24h gate --- 100h is well outside it. Expect it to reach
-  `origin` via the next harness tick-snapshot push, same mechanism as before.
+- `66047ba` --- widened `.gitignore` to cover all of `.claude/` (previously
+  only `.claude/settings.local.json` was protected, so a key written to
+  `.claude/settings.json` would have been committed), plus `.envrc`,
+  `mise.local.toml`, `*.pem`, OS junk. Checked: nothing under `.claude/` was
+  ever tracked in this repo, so this was inert here --- no reconciliation
+  needed, just confirmed via `git ls-files | grep .claude`.
+- `cb9af94` --- swapped the two standing reflection prompts to
+  breakthrough-first (was developer-identity-first), dropping "aha moment"
+  in favour of "breakthrough," in `reflections/README.md` and `CLAUDE.md`.
+  Explicitly scoped to those two files only.
 
-**Most important next action:** site content, process evidence, and checks are
-all in good shape; no outstanding work identified this run beyond what's now
-fixed. A future run with time still >24h should: re-verify `pnpm check`/`pnpm
-check:evidence`, reconcile `git log` against this file rather than trusting it
-blindly (per the run-4 lesson), and specifically re-scan for any content vs.
-filename mismatch after future convenor commits that rename or restructure
-files --- a passing check on a renamed file doesn't mean the content inside was
-updated to match. When a run lands inside 24h of cutoff: do the full finishing
-steps (local + live verification at both viewports against the deployed URL,
-final `PROCESS.md`/reflection check, then push).
+**Work this run:** the teaching team's prompt-order commit changes the *rule*
+but, correctly per its own stated scope, doesn't touch this repo's actual
+`reflections/crit-1.md` content --- so the file was left with the prompts in
+the old order. Caught this by re-reading the file against the newly-worded
+rule (not just trusting a green `check:evidence`, which only validates
+filename/word-count/citations, never prompt order or content shape --- same
+class of gap as run 5's stale-heading finding). Reordered the two paragraphs
+(commit `34338c9`) so "The breakthrough" now comes first, "What this week
+changed about the developer I want to be" second. No prose was rewritten,
+only reordered.
+
+Re-ran `pnpm check` (typecheck, build, oxlint, stylelint, 51/51 vitest) and
+`pnpm check:evidence` after the edit --- both green. Also did a fresh visual
+sanity pass since none had happened since run 3: built, served `dist/` on
+localhost:8788, and screenshotted index.html at both 1920×1080 and 390×844
+plus gallery.html at desktop. All three look correct --- readable text,
+construction banner fix from run 3 still holding, nav wraps cleanly on
+mobile, gallery grid renders with images and captions intact. No regressions
+found; killed the local server afterward.
+
+Left this run's commit (`34338c9`) unpushed locally, per the
+push-only-inside-24h gate --- 93h is well outside it. Expect it to reach
+`origin` via the next harness tick-snapshot push, per the established
+pattern in `MEMORY.md`.
+
+**Most important next action:** site content, CSS, and process evidence are
+all in good shape; no outstanding bugs or gaps found this run. A future run
+with time still >24h should: reconcile `git log` against this file (per the
+run-4 lesson --- don't trust `now.md` blindly), watch for more
+"COMP4020 teaching team"-authored commits as a now-established pattern
+alongside "Ben Swift" and the harness tick-snapshot, and specifically
+re-check reflection/PROCESS.md *content* (not just the checks) after any
+future convenor rule change to the reflection format --- this is the second
+time in two runs that a rename/rewording landed on the rule file without
+`check:evidence` being able to see whether the actual reflection content
+followed. When a run lands inside 24h of cutoff: do the full finishing steps
+(local + live verification at both viewports against the deployed URL, final
+`PROCESS.md`/reflection check, then push).

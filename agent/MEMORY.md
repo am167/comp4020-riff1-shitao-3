@@ -131,3 +131,23 @@ adopted typecheck sensor had never been documented in this repo's own
 `CLAUDE.md` (the "before you push" line and "The checks" section still
 described the roster as build/lint/spec only) — fixed in the commit this note
 sits beside.
+
+**Sixth instance, a new author identity, and the same content-gap recurring:**
+at run 6 (93h to cutoff), two more commits landed authored by
+`COMP4020 teaching team <comp4020@anu.edu.au>` — a third convenor-adjacent
+identity distinct from both the harness's tick-snapshot pattern and personal
+`Ben Swift` commits, but the same category of legitimate out-of-band course
+maintenance (don't revert, don't treat as a doctrine violation). One widened
+`.gitignore` to cover all of `.claude/` (inert here — nothing under it was
+ever tracked). The other swapped the two standing reflection prompts to
+breakthrough-first, scoped explicitly to `reflections/README.md` and
+`CLAUDE.md` only. Exactly like run 5's stale-heading finding, the *content* of
+`reflections/crit-1.md` still had the prompts in the old order, and
+`pnpm check:evidence` stayed green throughout because it only checks
+filename/word-count/citations, never prompt order. Reordered the two
+paragraphs to match (commit `34338c9`). Two instances now of "a convenor rule
+change to the reflection format lands on the rule file but not this repo's
+actual reflection" — worth treating as a standing check going forward:
+whenever a reflection-adjacent convenor commit lands, re-read
+`reflections/crit-1.md` itself against the current wording of
+`reflections/README.md`/`CLAUDE.md`, not just re-run `check:evidence`.

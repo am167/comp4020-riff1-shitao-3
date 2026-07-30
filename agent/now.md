@@ -1,62 +1,58 @@
-# Hand-off --- after this run (week 2, forgotten-web), 93h to cutoff
+# Hand-off --- after this run (week 2, forgotten-web), 76h to cutoff
 
-**Deliverable:** `comp4020-crit1-shitao`, 93h to cutoff at start of this run.
-Re-fetched `crits/01-forgotten-web.json` --- identical spec, no change since
+**Deliverable:** `comp4020-crit1-shitao`, 76h to cutoff at start of this run.
+Re-fetched `crits/01-forgotten-web.json` --- identical spec, unchanged since
 run 1.
 
 **State at start of this run:** working tree clean, local `main` in sync with
-`origin/main`. Since the last hand-off, two new commits had landed from
-**"COMP4020 teaching team" <comp4020@anu.edu.au>** --- a new convenor-adjacent
-author identity, distinct from both the harness's tick-snapshot pattern and
-"Ben Swift" personally, but same category as both: legitimate out-of-band
-course maintenance, not mine to revert or treat as a violation.
+`origin/main` at `417f175` (run 6's tick-snapshot). No new convenor/harness
+commits landed between runs 6 and 7 --- `git log` matched what run 6's
+`now.md` predicted exactly, for once, with no surprise commits to reconcile.
 
-- `66047ba` --- widened `.gitignore` to cover all of `.claude/` (previously
-  only `.claude/settings.local.json` was protected, so a key written to
-  `.claude/settings.json` would have been committed), plus `.envrc`,
-  `mise.local.toml`, `*.pem`, OS junk. Checked: nothing under `.claude/` was
-  ever tracked in this repo, so this was inert here --- no reconciliation
-  needed, just confirmed via `git ls-files | grep .claude`.
-- `cb9af94` --- swapped the two standing reflection prompts to
-  breakthrough-first (was developer-identity-first), dropping "aha moment"
-  in favour of "breakthrough," in `reflections/README.md` and `CLAUDE.md`.
-  Explicitly scoped to those two files only.
+**Work this run:** a full re-verification pass, not new content. `pnpm check`
+(typecheck, build, oxlint, stylelint, 51/51 vitest) and `pnpm check:evidence`
+both green. Went further than prior runs' visual spot-checks: built `dist/`,
+served it locally, and screenshotted **all five pages** (index, about,
+gallery, guestbook, webring) at **both** viewports (1920×1080, 390×844) ---
+prior runs had only sampled index+gallery (run 3/6) or index+gallery (run 6).
+All ten screenshots look correct: readable text throughout, construction
+banner fix holding, nav wraps cleanly on mobile, gallery images and alt text
+all present and descriptive, guestbook and webring content render as
+intended. Checked for horizontal overflow on mobile specifically (the
+right-edge dark bar visible in every screenshot is the intentional
+box-shadow/bevel effect, not overflow) via
+`document.documentElement.scrollWidth === window.innerWidth` (390 === 390) ---
+confirmed it's a design element, not a bug, rather than just eyeballing it.
 
-**Work this run:** the teaching team's prompt-order commit changes the *rule*
-but, correctly per its own stated scope, doesn't touch this repo's actual
-`reflections/crit-1.md` content --- so the file was left with the prompts in
-the old order. Caught this by re-reading the file against the newly-worded
-rule (not just trusting a green `check:evidence`, which only validates
-filename/word-count/citations, never prompt order or content shape --- same
-class of gap as run 5's stale-heading finding). Reordered the two paragraphs
-(commit `34338c9`) so "The breakthrough" now comes first, "What this week
-changed about the developer I want to be" second. No prose was rewritten,
-only reordered.
+Also re-read `reflections/crit-1.md` against the current
+`reflections/README.md` wording (the run-5/6 lesson: a green
+`check:evidence` only checks filename/word-count/citations, never content
+shape) --- this time it already matches: breakthrough-first, correct title
+heading, within word count. No drift found. Checked `PROCESS.md`'s four
+citations still resolve (`check:evidence` confirms). Spot-checked alt text
+coverage on `about.html`/`gallery.html` --- all images have full descriptive
+alt text, zero empty `alt=""`. No favicon or meta-description tags exist on
+any page, but neither is required by the brief or any check, and a missing
+favicon is period-authentic for the GeoCities aesthetic besides --- didn't
+add one, to avoid manufacturing busywork against a site that's already
+correct.
 
-Re-ran `pnpm check` (typecheck, build, oxlint, stylelint, 51/51 vitest) and
-`pnpm check:evidence` after the edit --- both green. Also did a fresh visual
-sanity pass since none had happened since run 3: built, served `dist/` on
-localhost:8788, and screenshotted index.html at both 1920×1080 and 390×844
-plus gallery.html at desktop. All three look correct --- readable text,
-construction banner fix from run 3 still holding, nav wraps cleanly on
-mobile, gallery grid renders with images and captions intact. No regressions
-found; killed the local server afterward.
+**No commits this run.** Genuinely nothing to fix or deepen was found after
+this pass --- the site, its process evidence, and its reflection are all
+already in the state five prior runs converged on. Didn't invent speculative
+scope (favicon, meta tags, extra pages) against a brief that doesn't ask for
+them, per the "don't add features beyond what the task requires" house
+style.
 
-Left this run's commit (`34338c9`) unpushed locally, per the
-push-only-inside-24h gate --- 93h is well outside it. Expect it to reach
-`origin` via the next harness tick-snapshot push, per the established
-pattern in `MEMORY.md`.
-
-**Most important next action:** site content, CSS, and process evidence are
-all in good shape; no outstanding bugs or gaps found this run. A future run
-with time still >24h should: reconcile `git log` against this file (per the
-run-4 lesson --- don't trust `now.md` blindly), watch for more
-"COMP4020 teaching team"-authored commits as a now-established pattern
-alongside "Ben Swift" and the harness tick-snapshot, and specifically
-re-check reflection/PROCESS.md *content* (not just the checks) after any
-future convenor rule change to the reflection format --- this is the second
-time in two runs that a rename/rewording landed on the rule file without
-`check:evidence` being able to see whether the actual reflection content
-followed. When a run lands inside 24h of cutoff: do the full finishing steps
-(local + live verification at both viewports against the deployed URL, final
-`PROCESS.md`/reflection check, then push).
+**Most important next action:** a future run with time still >24h should
+still do the full `git log` reconciliation (per run 4's lesson) before
+trusting this hand-off, since convenor/harness commits have landed between
+5 of the last 6 runs and there's no reason to expect that stops. If another
+convenor commit touches `reflections/README.md` or `CLAUDE.md`'s reflection
+wording again, re-diff `reflections/crit-1.md` against it by hand, same as
+this run and run 6 did. Otherwise, the deliverable is ship-ready content-wise
+whenever the run lands inside 24h to cutoff --- at that point follow the
+doctrine's finishing steps in full: run the `/ship` skill (repo is still
+private; nothing here has flipped it public yet), then verify the *live*
+GitHub Pages URL (not just `dist/` served locally) at both viewports before
+declaring done.

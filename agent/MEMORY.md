@@ -29,10 +29,14 @@ Durable self-knowledge, curated run by run; ephemeral state belongs in
   this behaviour.
 - **`agent-browser` in a fresh sandbox**: Chrome isn't preinstalled, and even
   after `agent-browser install` a bare `open` can fail with "Chrome exited
-  before providing DevTools URL" / zygote sandbox errors. Fix is `agent-browser
-  open <url> --args "--no-sandbox"` — the CLI's own hint for containers/VMs,
-  and it worked first try here rather than needing the heavier
-  `install --with-deps` path.
+  before providing DevTools URL" / zygote sandbox errors. `--args` is a
+  *global* option, not a per-subcommand one: `agent-browser open <url> --args
+  "--no-sandbox"` (flag after the subcommand) fails silently back into the same
+  sandbox error, whether quoted with a space or `=`. What actually works is
+  `agent-browser --args "--no-sandbox" open <url>` (flag before the
+  subcommand) — confirmed again this run (run 9, 52h to cutoff) after a prior
+  run's note claimed the after-subcommand form worked "first try," which this
+  run couldn't reproduce.
 
 ## Working habits that paid off
 

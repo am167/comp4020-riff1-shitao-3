@@ -1,47 +1,42 @@
-# Hand-off --- after run 9 (week 2, forgotten-web), 52h to cutoff
+# Hand-off --- after run 10 (week 2, forgotten-web), 45h to cutoff
 
-**Deliverable:** `comp4020-crit1-shitao`, 52h to cutoff at start of this run.
-Re-fetched `crits/01-forgotten-web.json` in full (not just WebFetch's earlier
-truncated summary) --- brief unchanged: plain HTML/CSS, no-JS,
-forgotten-web-aesthetic site, own-choice content, `PROCESS.md`,
-`reflections/crit-1.md`, incremental commits. No drift across nine runs now.
+**Deliverable:** `comp4020-crit1-shitao`, 45h to cutoff at start of this run.
+Re-fetched `crits/01-forgotten-web.json` --- brief unchanged: plain HTML/CSS,
+no-JS, forgotten-web-aesthetic site, own-choice content, `PROCESS.md`,
+`reflections/crit-1.md`, incremental commits. No drift across ten runs.
 
 **State at start of this run:** working tree clean, local `main` in sync with
-`origin/main` at `fbdeb58` (run 8's tick-snapshot). No new commits since run
-8's hand-off --- nothing to reconcile, no new convenor/harness commits this
-time.
+`origin/main` at `522cbec` (run 9's tick-snapshot). No new content commits
+since run 9's hand-off --- only tick-snapshots, nothing to reconcile.
 
-**Work this run:** same finding as runs 3, 5, 6, 7, 8: content-complete,
-nothing to fix. Ran `pnpm check` (typecheck, build, oxlint, stylelint, 51/51
-vitest) and `pnpm check:evidence`, both green. Read `PROCESS.md` and
-`reflections/crit-1.md` fresh --- reflection order still matches the
-breakthrough-first prompt order in the current `reflections/README.md` (run
-6/7's fix holds). Started the local dev server and opened it in
+**Work this run:** same finding as runs 3, 5--9: content-complete, nothing to
+fix. Ran `pnpm check` (typecheck, build, oxlint, stylelint, 51/51 vitest) and
+`pnpm check:evidence`, both green. Read `reflections/crit-1.md` against the
+current `reflections/README.md` --- still matches (breakthrough-first order
+holds from run 6/7's fix). Started the local dev server, opened it in
 `agent-browser` at both required viewports (1920×1080, 390×844): nav, marquee,
-rainbow `<hr>`, construction banner, all render correctly and legibly. Shut the
-dev server down afterwards.
+rainbow `<hr>`, construction banner all render correctly and legibly. Shut the
+dev server and browser down afterwards.
 
-**One correction to memory:** the `agent-browser` sandbox workaround note was
-wrong about flag placement --- `--args` has to come *before* the subcommand
-(`agent-browser --args "--no-sandbox" open <url>`), not after it. Tried the
-after-subcommand form (both `--args "x"` and `--args="x"`) and both failed with
-the same zygote sandbox error; only the before-subcommand form worked. Fixed
-in `MEMORY.md`'s tooling-gotchas section.
+**Memory curation this run:** condensed `MEMORY.md`'s "Doctrine timing,
+reaffirmed" section --- it had grown into a six-instance chronological ledger
+of the same two patterns (out-of-band convenor/harness commits; convenor rule
+changes landing on the rule file but not this repo's actual reflection). Since
+the pattern is now solidly established, rewrote it as three durable rules
+instead of a run-by-run narrative. No new tooling gotchas this run, so that
+section is unchanged.
 
-**No commits this run** beyond the memory fix (which lands via the harness's
-own tick-snapshot, not by me pushing). Nothing to build or deepen against a
-brief that's been satisfied since early runs; per house style (runs 5--7's
-explicit call), didn't manufacture scope.
+**No commits this run** beyond the memory update (lands via the harness's own
+tick-snapshot). Nothing to build or deepen against a satisfied brief; per
+established house style, didn't manufacture scope.
 
-**Most important next action:** this deliverable is now independently
-re-verified content-complete across six of the last seven runs (3, 5, 6, 7, 8,
-9) with zero findings each time, including a real-browser visual check this
-run and last. A future run can skip another exhaustive re-verification pass if
-`git log` shows nothing new upstream, and go straight to: once inside 24h to
-cutoff, run the doctrine's finishing steps in full --- reconfirm
+**Most important next action:** at 45h to cutoff, still outside the 24h
+finishing window. The next run (or the one after, whichever crosses 24h to
+cutoff) should run the doctrine's finishing steps in full: reconfirm
 `PROCESS.md` citations and `reflections/crit-1.md` still match current rule
 wording (check `reflections/README.md` and this repo's `CLAUDE.md` for any new
-convenor edits first, per runs 5/6/7's lesson that `check:evidence` only
-checks filename/word-count/citations, never content shape), run the `/ship`
-skill (repo is still private), then verify the *live* GitHub Pages URL (not
-local `dist/`) at both viewports before declaring done.
+convenor edits first), run the `/ship` skill (repo is still private as of this
+run), then verify the *live* GitHub Pages URL (not local `dist/`) at both
+viewports before declaring done. Until then, a quick `git log` diff-check plus
+`pnpm check`/`check:evidence` is enough --- no need for another full
+re-audit unless something upstream actually changed.

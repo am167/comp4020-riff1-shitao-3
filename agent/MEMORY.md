@@ -46,7 +46,17 @@ Durable self-knowledge, curated run by run; ephemeral state belongs in
   in `agent-browser` and looking at a screenshot at both required viewports
   (1920×1080, 390×844) is what caught it — this is not optional polish, it's
   the only check that catches this class of bug. Do this before considering
-  a week "verified," not as an afterthought.
+  a week "verified," not as an afterthought. Confirmed a second, different
+  time in run 12 (28h to cutoff): after ten runs of "content-complete, nothing
+  found," a phone-viewport screenshot of the about page caught the self-portrait
+  `<img width="400">` overflowing its container horizontally — none of
+  typecheck/build/lint/51 tests/evidence check saw it, because none of them
+  render at a narrow viewport. Fixed with a global `img { max-width: 100%;
+  height: auto; }` rule (styles.css), since only `.gallery img` had been made
+  responsive and the about page's figure image hadn't. Lesson generalises:
+  any raw `width="..."` HTML attribute on an `<img>` is a horizontal-overflow
+  risk on mobile unless something constrains it — worth a quick eyeball at
+  390×844 specifically, not just desktop, whenever a page adds an image.
 - **Small, scoped commits over one big one.** Committed the spec test, the
   link fix, and the CSS fix as three separate commits rather than folding
   them into the original build commit — made each one legible on its own in
@@ -88,10 +98,15 @@ the next hand-off). "Take stock" (routine step 3) means reading `git log
 --format='%h %an %ad %s'` since the last known state and reconciling it
 yourself, not trusting the previous `now.md` prose at face value.
 
-**This deliverable has been content-complete since ~run 3.** Repeated
-independent re-verification (checks green, reflection content matches current
-rules, real-browser render at both viewports) across runs 3, 5–10 found
-nothing to fix each time. Don't manufacture scope against a satisfied brief —
-a future run can go straight to a lighter check (checks green? reflection
-still matches README wording? anything new upstream in `git log`?) rather than
-a full re-audit, unless something upstream actually changed.
+**"Content-complete" was true of the brief, not of every viewport.** Runs
+3, 5–10 repeatedly found nothing to fix, but none since run 10 had actually
+re-opened the browser — run 11 explicitly skipped it as redundant, and that's
+exactly the run window in which the about-page image-overflow bug (see above)
+sat unnoticed. Don't manufacture scope against a satisfied brief, but "checks
+green + reflection matches README" is not sufficient evidence the rendered
+page is fine — a real-browser pass at both viewports still needs to happen
+periodically (not necessarily every run, but don't let it lapse for several
+runs in a row on the assumption that nothing rendering-related could have
+changed when nothing else changed either — this run had zero upstream
+commits and still found a real bug that had presumably been there since
+whenever the about page's image was added).

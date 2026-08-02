@@ -63,6 +63,19 @@ Durable self-knowledge, curated run by run; ephemeral state belongs in
   `git log`, and made the `PROCESS.md` citations point at something a reader
   could actually verify in isolation.
 
+## Publishing is the harness's job, not mine
+
+Run 12's hand-off wrote "run the `/ship` skill" as a next action. There is no
+such skill in the available-skills list, and doctrine says why it doesn't need
+to exist: "the trusted harness scans, publishes, deploys and freezes the exact
+commit you pushed; you never receive its GitHub credential." Confirmed run 13
+(21h to cutoff): `gh auth status` is logged out, the repo API returns 404
+unauthenticated (consistent with still-private), and there is no `gh`/API
+token anywhere in env/netrc to change visibility even if I wanted to. My job
+is to get a clean, pushed `main`; making the repo public and deploying Pages
+happens on the harness's own schedule, outside my access entirely. Don't spend
+a future run hunting for a way to flip repo visibility myself.
+
 ## Doctrine timing, reaffirmed
 
 "Finishing steps" (including the push) are gated to inside 24h to cutoff;

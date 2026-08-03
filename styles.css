@@ -180,6 +180,18 @@ nav[aria-label="Primary"] {
   color: var(--parchment);
 }
 
+.lang-link {
+  background: var(--seal-red-dark);
+  color: var(--parchment);
+  border-color: var(--seal-red);
+}
+
+.lang-link:hover,
+.lang-link:focus-visible {
+  background: var(--gold);
+  color: var(--ink);
+}
+
 /* ------------------------------- content -------------------------------- */
 
 main {

@@ -1,19 +1,22 @@
 /* ---------------------------------------------------------------------
-   Shitao's Corner of the Web --- a 1999-coded shrine, built the way the
-   web used to be built: tiled backgrounds, beveled buttons, a marquee,
-   a rainbow rule, a hit counter. No JavaScript --- every "animation"
-   here is CSS, and every one of them respects prefers-reduced-motion.
+   Shitao's Corner of the Web --- a 1999-coded shrine, redrawn as a black
+   ink scroll: rice paper, brush strokes, a single ink seal. No colour
+   anywhere but ink and paper --- every "animation" here is CSS, and every
+   one of them respects prefers-reduced-motion.
    --------------------------------------------------------------------- */
 
 :root {
-  --ink: #1a1508;
-  --parchment: #f2e8d0;
-  --parchment-dark: #e2d3a8;
-  --seal-red: #a8201a;
-  --seal-red-dark: #7a1712;
-  --gold: #b8860b;
-  --link: #1a3f8f;
-  --link-visited: #6a1b8f;
+  --paper: #f5f2e6;
+  --paper-deep: #e7e1cd;
+  --ink: #17150f;
+  --ink-soft: #46433a;
+  --ink-wash: #8c8877;
+  --ink-faint: #d9d3bd;
+  --silk: #d6cfb6;
+  --silk-deep: #c3bb9c;
+  --font-display: "Kaiti SC", "STKaiti", "KaiTi", "DFKai-SB", "BiauKai", "Baskerville", "Georgia", serif;
+  --font-body: "Georgia", "Songti SC", "Times New Roman", serif;
+  --font-mono: "Courier New", monospace;
 }
 
 * {
@@ -23,6 +26,7 @@
 img {
   max-width: 100%;
   height: auto;
+  filter: grayscale(1) contrast(1.05);
 }
 
 html {
@@ -32,30 +36,132 @@ html {
 body {
   margin: 0;
   padding: 1.5rem 1rem 3rem;
-  font-family: Georgia, "Times New Roman", serif;
+  overflow-x: hidden;
+  font-family: var(--font-body);
   color: var(--ink);
   line-height: 1.6;
-  background-color: var(--parchment-dark);
+  background-color: var(--paper);
+  background-image:
+    radial-gradient(ellipse 55% 40% at 18% 25%, rgb(23 21 15 / 4%) 0%, transparent 60%),
+    radial-gradient(ellipse 45% 35% at 82% 12%, rgb(23 21 15 / 3.5%) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 45% at 65% 85%, rgb(23 21 15 / 4.5%) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 30% at 8% 92%, rgb(23 21 15 / 3%) 0%, transparent 50%);
+}
+
+/* ------------------------------ the scroll -------------------------------
+   A hanging scroll (立軸): tiantou "heaven" above, ditou "earth" below,
+   both cut from the same mounting silk, framing the huaxin --- the
+   "painting's heart" --- where the page's own content lives. Jingyan
+   ribbons flutter from the top; the scroll's weighted roller peeks out
+   beneath the bottom mount, its knobs wider than the mount itself.
+   --------------------------------------------------------------------- */
+
+.scroll {
+  position: relative;
+  max-width: 46rem;
+  margin: 0 auto 1.75rem;
+  box-shadow: 8px 8px 0 var(--ink);
+}
+
+.tiantou,
+.ditou {
+  position: relative;
+  border: 3px solid var(--ink);
+  background-color: var(--silk);
   background-image:
     repeating-linear-gradient(
       45deg,
-      var(--parchment-dark) 0,
-      var(--parchment-dark) 12px,
-      var(--parchment) 12px,
-      var(--parchment) 24px
+      var(--silk) 0,
+      var(--silk) 10px,
+      var(--silk-deep) 10px,
+      var(--silk-deep) 11px,
+      var(--silk) 11px,
+      var(--silk) 21px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent 0,
+      transparent 10px,
+      rgb(23 21 15 / 6%) 10px,
+      rgb(23 21 15 / 6%) 11px,
+      transparent 11px,
+      transparent 21px
     );
 }
 
-/* the double-rule scroll mount every page sits inside */
-.scroll {
-  max-width: 46rem;
-  margin: 0 auto;
-  background: var(--parchment);
-  border: 4px double var(--seal-red);
-  outline: 1px solid var(--gold);
-  outline-offset: -10px;
+.tiantou {
+  height: 3.5rem;
+  border-bottom: none;
+}
+
+.huaxin {
+  position: relative;
+  background: var(--paper);
+  border-right: 3px solid var(--ink);
+  border-left: 3px solid var(--ink);
+  outline: 1px solid var(--ink-wash);
+  outline-offset: -9px;
   padding: 1.5rem 1.75rem 2rem;
-  box-shadow: 8px 8px 0 var(--ink);
+}
+
+.ditou {
+  height: 1.75rem;
+  border-top: none;
+}
+
+.jingyan {
+  position: absolute;
+  top: 0;
+  width: 0.5rem;
+  height: 68%;
+  background: var(--ink-soft);
+  opacity: 0.8;
+  clip-path: polygon(0 0, 100% 0, 100% 82%, 50% 100%, 0 82%);
+}
+
+.jingyan-left {
+  left: 24%;
+}
+
+.jingyan-right {
+  right: 24%;
+}
+
+.roller {
+  position: absolute;
+  bottom: -0.55rem;
+  left: 50%;
+  width: calc(100% + 1.6rem);
+  height: 0.85rem;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: linear-gradient(
+    180deg,
+    var(--ink-faint) 0%,
+    var(--ink-soft) 30%,
+    var(--ink) 55%,
+    var(--ink-soft) 80%,
+    var(--ink-faint) 100%
+  );
+  box-shadow: 0 3px 3px rgb(0 0 0 / 30%);
+}
+
+.roller-knob {
+  position: absolute;
+  top: 50%;
+  width: 1.15rem;
+  height: 1.15rem;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, var(--ink-faint), var(--ink-soft) 55%, var(--ink) 100%);
+}
+
+.roller-knob-left {
+  left: -0.6rem;
+}
+
+.roller-knob-right {
+  right: -0.6rem;
 }
 
 /* -------------------------- banner + marquee ------------------------- */
@@ -67,22 +173,26 @@ header {
 
 .wordmark {
   margin: 0.2rem 0;
-  font-family: "Comic Sans MS", "Chalkboard SE", cursive;
+  font-family: var(--font-display);
 }
 
 a {
-  color: var(--link);
+  color: var(--ink);
+  text-decoration-color: var(--ink-wash);
+  text-underline-offset: 2px;
 }
 
 a:visited {
-  color: var(--link-visited);
+  color: var(--ink-wash);
 }
 
 .wordmark-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   font-size: 2rem;
   font-weight: bold;
-  color: var(--seal-red);
-  text-shadow: 2px 2px 0 var(--gold);
+  color: var(--ink);
   text-decoration: none;
 }
 
@@ -91,14 +201,28 @@ a:visited {
   text-decoration: underline;
 }
 
+.seal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.15em;
+  height: 1.15em;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-display);
+  font-size: 0.7em;
+  line-height: 1;
+  border-radius: 2px;
+}
+
 .marquee {
   overflow: hidden;
   white-space: nowrap;
   border: 2px solid var(--ink);
   background: var(--ink);
-  color: #ffd76a;
+  color: var(--paper);
   padding: 0.35rem 0;
-  font-family: "Courier New", monospace;
+  font-family: var(--font-mono);
   font-weight: bold;
 }
 
@@ -129,22 +253,26 @@ a:visited {
   }
 }
 
-/* ----------------------------- rainbow rule --------------------------- */
+/* ------------------------------ ink rule ------------------------------ */
 
-.rainbow-rule {
-  height: 6px;
+.ink-rule {
+  position: relative;
+  width: min(85%, 34rem);
+  height: 12px;
+  margin: 1.25rem auto;
   border: 0;
-  margin: 1rem 0;
-  background: linear-gradient(
-    90deg,
-    #e83c3c,
-    #f2a93c,
-    #f2e13c,
-    #4caf50,
-    #3c8ff2,
-    #7a3cf2,
-    #e83c3c
-  );
+  background: var(--ink);
+  clip-path: polygon(0% 50%, 6% 8%, 50% 0%, 94% 14%, 100% 50%, 93% 90%, 48% 100%, 4% 84%);
+}
+
+.ink-rule::after {
+  content: "";
+  position: absolute;
+  inset: -3px 8%;
+  z-index: -1;
+  background: var(--ink);
+  opacity: 0.3;
+  clip-path: polygon(0% 60%, 10% 15%, 55% 5%, 96% 20%, 100% 55%, 90% 95%, 45% 100%, 8% 80%);
 }
 
 /* -------------------------------- nav --------------------------------- */
@@ -155,14 +283,14 @@ nav[aria-label="Primary"] {
   gap: 0.6rem;
   justify-content: center;
   margin: 1rem 0;
-  font-family: "Comic Sans MS", "Chalkboard SE", cursive;
+  font-family: var(--font-display);
 }
 
 .nav-link {
   display: inline-block;
   padding: 0.35rem 0.9rem;
-  background: var(--parchment-dark);
-  border: 2px outset var(--gold);
+  background: var(--paper);
+  border: 1.5px solid var(--ink);
   color: var(--ink);
   text-decoration: none;
   font-weight: bold;
@@ -170,26 +298,12 @@ nav[aria-label="Primary"] {
 
 .nav-link:hover,
 .nav-link:focus-visible {
-  background: var(--gold);
-  color: var(--parchment);
+  background: var(--ink-faint);
 }
 
 .nav-link[aria-current="page"] {
-  border-style: inset;
-  background: var(--seal-red);
-  color: var(--parchment);
-}
-
-.lang-link {
-  background: var(--seal-red-dark);
-  color: var(--parchment);
-  border-color: var(--seal-red);
-}
-
-.lang-link:hover,
-.lang-link:focus-visible {
-  background: var(--gold);
-  color: var(--ink);
+  background: var(--ink);
+  color: var(--paper);
 }
 
 /* ------------------------------- content -------------------------------- */
@@ -199,18 +313,19 @@ main {
 }
 
 main h1 {
-  color: var(--seal-red);
-  border-bottom: 3px solid var(--gold);
+  font-family: var(--font-display);
+  color: var(--ink);
+  border-bottom: 3px solid var(--ink-wash);
   padding-bottom: 0.25rem;
 }
 
 main h2 {
-  color: var(--seal-red-dark);
-  font-family: "Comic Sans MS", "Chalkboard SE", cursive;
+  color: var(--ink-soft);
+  font-family: var(--font-display);
 }
 
 blockquote {
-  border-left: 4px solid var(--gold);
+  border-left: 4px solid var(--ink-wash);
   margin-left: 0;
   padding-left: 1rem;
   font-style: italic;
@@ -224,9 +339,9 @@ blockquote {
   align-items: center;
   gap: 0.75rem;
   border: 3px solid var(--ink);
-  background: var(--parchment-dark);
+  background: var(--paper-deep);
   color: var(--ink);
-  font-family: "Comic Sans MS", "Chalkboard SE", cursive;
+  font-family: var(--font-display);
   font-weight: bold;
   padding: 1.1rem 1rem;
   margin: 1.25rem 0;
@@ -241,8 +356,8 @@ blockquote {
   height: 8px;
   background: repeating-linear-gradient(
     45deg,
-    #ffd76a 0 10px,
-    #1a1508 10px 20px
+    var(--paper) 0 10px,
+    var(--ink) 10px 20px
   );
 }
 
@@ -255,7 +370,7 @@ blockquote {
 }
 
 .construction .tag {
-  background: var(--parchment);
+  background: var(--paper);
   border: 2px solid var(--ink);
   padding: 0.2rem 0.6rem;
   white-space: nowrap;
@@ -265,7 +380,7 @@ blockquote {
 
 .blink {
   animation: blink 1.2s steps(1) infinite;
-  color: var(--seal-red);
+  color: var(--ink);
   font-weight: bold;
 }
 
@@ -293,8 +408,8 @@ blockquote {
 }
 
 .gallery li {
-  border: 3px ridge var(--gold);
-  background: var(--parchment-dark);
+  border: 1px solid var(--ink);
+  background: var(--paper-deep);
   padding: 0.6rem;
 }
 
@@ -312,7 +427,7 @@ blockquote {
 
 .gallery figcaption .credit {
   display: block;
-  font-family: "Courier New", monospace;
+  font-family: var(--font-mono);
   font-size: 0.8rem;
   color: var(--ink);
   opacity: 0.75;
@@ -321,21 +436,22 @@ blockquote {
 /* ------------------------------- guestbook -------------------------------- */
 
 .guestbook-entry {
-  border: 2px solid var(--ink);
-  background: var(--parchment-dark);
+  border: 1px solid var(--ink);
+  border-left: 4px solid var(--ink);
+  background: var(--paper-deep);
   padding: 0.75rem 1rem;
   margin-bottom: 1rem;
 }
 
 .guestbook-entry .signed {
-  font-family: "Comic Sans MS", "Chalkboard SE", cursive;
+  font-family: var(--font-display);
   font-weight: bold;
 }
 
 .guestbook-entry .stamp {
-  font-family: "Courier New", monospace;
+  font-family: var(--font-mono);
   font-size: 0.85rem;
-  opacity: 0.75;
+  color: var(--ink-wash);
 }
 
 /* -------------------------------- webring badges --------------------------- */
@@ -349,9 +465,9 @@ blockquote {
 }
 
 .badge {
-  border: 2px solid var(--ink);
-  background: var(--parchment-dark);
-  font-family: "Courier New", monospace;
+  border: 1px solid var(--ink);
+  background: var(--paper-deep);
+  font-family: var(--font-mono);
   font-size: 0.85rem;
   text-align: center;
   padding: 0.5rem 0.75rem;
@@ -365,14 +481,14 @@ blockquote {
   gap: 0.15rem;
   background: var(--ink);
   padding: 0.4rem 0.6rem;
-  border: 2px solid var(--gold);
+  border: 1.5px solid var(--ink);
 }
 
 .counter span {
-  font-family: "Courier New", monospace;
+  font-family: var(--font-mono);
   font-weight: bold;
-  color: #ff5a3c;
-  background: #200;
+  color: var(--paper);
+  background: #000;
   padding: 0.1rem 0.35rem;
   font-size: 1.1rem;
 }
@@ -383,7 +499,7 @@ footer {
   text-align: center;
   margin-top: 2rem;
   padding-top: 1rem;
-  border-top: 3px double var(--seal-red);
+  border-top: 3px double var(--ink);
   font-size: 0.85rem;
 }
 
@@ -399,8 +515,37 @@ footer p {
   }
 
   .scroll {
-    padding: 1rem 1rem 1.5rem;
     box-shadow: 4px 4px 0 var(--ink);
+  }
+
+  .huaxin {
+    padding: 1rem 1rem 1.5rem;
+  }
+
+  .tiantou {
+    height: 2.5rem;
+  }
+
+  .ditou {
+    height: 1.25rem;
+  }
+
+  .roller {
+    width: calc(100% + 1.1rem);
+    height: 0.65rem;
+  }
+
+  .roller-knob {
+    width: 0.85rem;
+    height: 0.85rem;
+  }
+
+  .roller-knob-left {
+    left: -0.45rem;
+  }
+
+  .roller-knob-right {
+    right: -0.45rem;
   }
 
   .wordmark-link {
